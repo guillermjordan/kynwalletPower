@@ -210,8 +210,17 @@ el registro dependan uno del otro.
   `data-mobile-brand`, que es lo que el CSS usa para ocultar el panel en móvil.
 - **Resultado**: `npm run verify` en verde; 242 pruebas; cobertura 98,6 % de sentencias, 96,2 %
   de ramas, 100 % de funciones y líneas.
-- **Pendiente manual**: T059 (revisión visual a 320/768/1280/1440 px contra el frame) y T068
-  (17 escenarios de quickstart y teclado en un navegador real).
+- **Verificación en navegador (T059, T068)**: Microsoft Edge en modo headless, controlado con
+  `puppeteer-core` instalado fuera del repo (sin dependencias nuevas), con una cuenta ficticia pasada
+  por variable de entorno y un segundo servidor sin cuentas para el escenario 16.
+  - T059: sin scroll horizontal a 320, 768, 1280 y 1440 px; en `/registro` el panel de marca se
+    oculta por debajo de 960 px; el formulario mide 400 px. Frente al frame `04 · Registro`
+    coinciden textos, orden y jerarquía. Diferencias aceptadas: el formulario queda centrado
+    verticalmente (unos 30 px más abajo que en el frame, research.md R8) y se usan los colores
+    accesibles (R7).
+  - T068: los escenarios 1–13, 16 y 17 de quickstart.md pasan (el 14 y el 15 se cubren en T059).
+    El registro tarda unos 1,1 s (SC-002: ≤ 2 s); el orden de tabulación coincide con el contrato
+    y el foco es visible en todos los controles.
 - **Aprobaciones pendientes para el PR**: degradado del registro y tokens accesibles (diseño, 8.6),
   cambios en módulos de 001 (revisor, 9.3) y excepción temporal de 5.5/8.7 (responsable técnico,
   9.1).

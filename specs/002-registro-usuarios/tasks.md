@@ -200,7 +200,7 @@ las historias usan. Al terminar, el login funciona exactamente igual que antes.
 
 - [X] T057 [US5] En `src/ui/layout/AuthLayout/AuthLayout.module.css` y `src/ui/layout/BrandPanel/BrandPanel.module.css`, ocultar el panel por debajo de 960px cuando `mobileBrand="hidden"`, manteniendo los puntos de corte de 001 R10 en escritorio, hasta pasar T056
 - [X] T058 [US5] Completar `src/ui/features/register/RegisterForm.module.css` según research.md R7: columna de `var(--form-width)`, `--space-5` antes y después del separador y antes del pie, botones sociales en grilla de dos columnas con gap `--space-4`, pie centrado; sin anchos fijos que provoquen scroll a 320px
-- [ ] T059 [US5] Verificación visual con `npm run dev` a 320px, 768px, 1280px y 1440px: sin scroll horizontal, solo formulario en móvil, dos paneles en escritorio; comparar con el frame `04 · Registro` (nodo `31:2`, archivo `AtXTxOsBbISgGtDp0rk4kf`) y registrar en `plan.md` (Implementation Notes) cualquier diferencia de textos, orden o jerarquía (SC-006)
+- [X] T059 [US5] Verificación visual con `npm run dev` a 320px, 768px, 1280px y 1440px: sin scroll horizontal, solo formulario en móvil, dos paneles en escritorio; comparar con el frame `04 · Registro` (nodo `31:2`, archivo `AtXTxOsBbISgGtDp0rk4kf`) y registrar en `plan.md` (Implementation Notes) cualquier diferencia de textos, orden o jerarquía (SC-006)
 
 **Checkpoint**: la pantalla es usable y fiel al diseño en todos los anchos
 
@@ -234,7 +234,7 @@ las historias usan. Al terminar, el login funciona exactamente igual que antes.
 - [X] T065 [P] Actualizar `README.md`: rutas `/login` y `/registro`, flujo de registro y la nota de hosting (devolver `index.html` para cualquier ruta) de quickstart.md
 - [X] T066 [P] Revisar que ningún archivo nuevo use `console`, que la contraseña no aparezca en mensajes, URL ni almacenamiento (FR-019), y que no queden literales de color, tipografía o espaciado que tengan token (Constitución 4.1)
 - [X] T067 Ejecutar `npm run verify`: lint, formato, typecheck, cobertura ≥ 80 %, build, auditoría de dependencias y licencias y escaneo de secretos en verde (Constitución 9.4)
-- [ ] T068 Recorrer los 17 escenarios de quickstart.md con `npm run dev` y la navegación solo con teclado (FR-020), y registrar el resultado
+- [X] T068 Recorrer los 17 escenarios de quickstart.md con `npm run dev` y la navegación solo con teclado (FR-020), y registrar el resultado
 - [X] T069 Actualizar `plan.md` (Implementation Notes) con las decisiones tomadas durante la implementación y dejar listas para el PR las aprobaciones pendientes: degradado del registro y tokens accesibles (diseño, 8.6), cambios en módulos de 001 (revisor, 9.3) y la excepción temporal de 5.5 y 8.7 (responsable técnico, 9.1; vence el 2027-03-31 o con el primer backend). Sin esa aprobación, el PR no se integra
 
 ---
