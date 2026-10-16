@@ -2,10 +2,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: var(--space-2);
   width: 100%;
   border-radius: var(--radius-control);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
   transition:
     background-color 120ms ease,
@@ -21,7 +21,7 @@
   border: none;
   background: var(--brand-700);
   color: var(--neutral-0);
-  font-size: 16px;
+  font-size: var(--font-size-body);
 }
 
 .primary:hover:not(:disabled) {
@@ -37,7 +37,7 @@
   border: 1.5px solid var(--neutral-border);
   background: var(--neutral-0);
   color: var(--neutral-900);
-  font-size: 15px;
+  font-size: var(--font-size-input);
 }
 
 .secondary:hover:not(:disabled) {
@@ -45,15 +45,6 @@
 }
 
 .link {
+  /* El resto del estilo viene de textLink.module.css (compartido con Link). */
   width: auto;
-  padding: 2px;
-  border: none;
-  border-radius: 4px;
-  background: none;
-  color: var(--brand-700);
-  font-size: 14px;
-}
-
-.link:hover:not(:disabled) {
-  text-decoration: underline;
 }

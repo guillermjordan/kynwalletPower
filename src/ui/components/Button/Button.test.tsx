@@ -18,7 +18,7 @@ describe('Button', () => {
         <Button variant="link">Tres</Button>
       </>,
     );
-    expect(screen.getByRole('button', { name: 'Tres' })).toHaveClass('link');
+    expect(screen.getByRole('button', { name: 'Tres' })).toHaveClass('link', 'textLink');
     expect(screen.getByRole('button', { name: 'Uno' })).toHaveClass('primary');
     expect(screen.getByRole('button', { name: 'Dos' })).toHaveClass('secondary');
   });

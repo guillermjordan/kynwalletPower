@@ -1,0 +1,10 @@
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 0;
+  font-size: var(--font-size-label);
+  color: var(--neutral-600);
+}

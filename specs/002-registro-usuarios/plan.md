@@ -184,3 +184,34 @@ el registro dependan uno del otro.
   "Iniciando sesión…".
 - **Trazabilidad con 001**: agregar una nota en `specs/001-login-billetera/spec.md` (FR-016 y
   US5-1) que indique que "Regístrate" pasa a navegar a `/registro` según 002 FR-016.
+
+## Implementation Notes (2026-10-16)
+
+- **Finales de línea**: la línea de base (T001) fallaba en `npm run format` porque el checkout en
+  Windows (`core.autocrlf=true`) convertía los archivos a CRLF. Se agregó `.gitattributes`
+  (`* text=auto eol=lf`); el contenido versionado no cambió.
+- **Estilo de enlace compartido**: `composes` de CSS Modules generaba un aviso de PostCSS en la
+  build. `Button` (variante `link`) y `Link` aplican directamente la clase `.textLink` de
+  `src/ui/styles/textLink.module.css` (research.md R9 decía `composes`).
+- **Componentes nuevos por DRY (4.1)**: `FormHeading` (título y subtítulo con `h1` enfocable) y
+  `FormFooter` (pregunta + enlace) los usan el login y el registro; los estilos se movieron desde
+  `LoginForm.module.css`.
+- **`LoginScreen` se conserva** en `features/login` como composición de `AuthLayout` + `LoginForm`
+  con los textos de marca del login, simétrica a `RegisterScreen`. El layout de dos paneles quedó
+  en `ui/layout/AuthLayout` (el plan decía borrar `LoginScreen`).
+- **Hallazgos del análisis resueltos al implementar**: I1 (`main.tsx` y `App.tsx` se actualizaron
+  en la misma tarea que cada cambio de firma; la build nunca quedó rota), I2 (el `h1` vive en
+  `RegisterForm` desde el inicio, vía `FormHeading`), I3 (data-model de 001 actualizado con las
+  reglas de `displayName`), G1 (prueba de los dos controles de visibilidad) y G2 (prueba de que el
+  aviso no reaparece). G4: el orden de tabulación del registro se verifica con una prueba.
+- **Foco al navegar**: `useFocusOnNavigation` usa un contador de navegaciones a nivel de módulo; la
+  prueba de "carga inicial" usa `vi.resetModules()` para partir de cero.
+- **T056**: no se agregó una prueba aparte; `AuthLayout.test.tsx` (T018) ya verifica
+  `data-mobile-brand`, que es lo que el CSS usa para ocultar el panel en móvil.
+- **Resultado**: `npm run verify` en verde; 242 pruebas; cobertura 98,6 % de sentencias, 96,2 %
+  de ramas, 100 % de funciones y líneas.
+- **Pendiente manual**: T059 (revisión visual a 320/768/1280/1440 px contra el frame) y T068
+  (17 escenarios de quickstart y teclado en un navegador real).
+- **Aprobaciones pendientes para el PR**: degradado del registro y tokens accesibles (diseño, 8.6),
+  cambios en módulos de 001 (revisor, 9.3) y excepción temporal de 5.5/8.7 (responsable técnico,
+  9.1).

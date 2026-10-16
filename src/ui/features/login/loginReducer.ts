@@ -1,5 +1,6 @@
 import type { AuthResult } from '@/domain/auth';
 import { validateCredentials, type CredentialErrors } from '@/domain/validation';
+import { visibleErrors } from '@/ui/forms/visibleErrors';
 
 export type Field = 'email' | 'password';
 export type FieldErrors = CredentialErrors;
@@ -36,12 +37,8 @@ export const initialLoginState: LoginState = {
 };
 
 /** Errores visibles: solo los de campos ya tocados (FR-005). */
-function visibleErrors(values: LoginState['values'], touched: LoginState['touched']): FieldErrors {
-  const errors = validateCredentials(values);
-  const visible: FieldErrors = {};
-  if (touched.email && errors.email) visible.email = errors.email;
-  if (touched.password && errors.password) visible.password = errors.password;
-  return visible;
+function currentErrors(values: LoginState['values'], touched: LoginState['touched']): FieldErrors {
+  return visibleErrors(validateCredentials(values), touched);
 }
 
 /** Máquina de estados del formulario (data-model.md, LoginFormState). */
@@ -54,13 +51,13 @@ export function loginReducer(state: LoginState, action: LoginAction): LoginState
         status: state.status === 'authError' ? 'editing' : state.status,
         authError: null,
         values,
-        fieldErrors: visibleErrors(values, state.touched),
+        fieldErrors: currentErrors(values, state.touched),
       };
     }
 
     case 'blur': {
       const touched = { ...state.touched, [action.field]: true };
-      return { ...state, touched, fieldErrors: visibleErrors(state.values, touched) };
+      return { ...state, touched, fieldErrors: currentErrors(state.values, touched) };
     }
 
     case 'toggleRemember':
@@ -73,7 +70,7 @@ export function loginReducer(state: LoginState, action: LoginAction): LoginState
     case 'submit': {
       if (state.status === 'submitting') return state;
       const touched = { email: true, password: true };
-      const fieldErrors = visibleErrors(state.values, touched);
+      const fieldErrors = currentErrors(state.values, touched);
       // FR-006: no se autentica mientras existan errores de validación.
       const status = Object.keys(fieldErrors).length > 0 ? 'editing' : 'submitting';
       return { ...state, status, touched, fieldErrors, authError: null, notice: null };

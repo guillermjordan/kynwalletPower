@@ -7,10 +7,14 @@
   color: var(--neutral-0);
 }
 
+.register {
+  background: var(--brand-gradient-register);
+}
+
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .logo img {
@@ -19,8 +23,8 @@
 }
 
 .logoText {
-  font-size: 26px;
-  font-weight: 700;
+  font-size: var(--font-size-logo);
+  font-weight: var(--font-weight-bold);
 }
 
 .headline,
@@ -48,15 +52,19 @@
 
   .title {
     margin: 0;
-    font-size: 44px;
-    font-weight: 700;
-    line-height: 1.08;
+    font-size: var(--font-size-display);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-display);
+  }
+
+  .titleLine {
+    display: block;
   }
 
   .subtitle {
     margin: 0;
-    font-size: 17px;
-    line-height: 1.5;
+    font-size: var(--font-size-lead);
+    line-height: var(--line-height-lead);
     color: var(--on-brand-muted);
   }
 
@@ -81,8 +89,8 @@
   }
 
   .cardName {
-    font-size: 15px;
-    font-weight: 600;
+    font-size: var(--font-size-input);
+    font-weight: var(--font-weight-semibold);
   }
 
   .chip {
@@ -94,14 +102,14 @@
 
   .cardNumber {
     font-size: 20px;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     letter-spacing: 1px;
     white-space: pre;
   }
 
   .cardBottom {
-    font-size: 13px;
-    font-weight: 500;
+    font-size: var(--font-size-caption);
+    font-weight: var(--font-weight-medium);
     color: var(--on-brand-soft);
   }
 }

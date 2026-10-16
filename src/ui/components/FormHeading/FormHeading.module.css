@@ -1,0 +1,23 @@
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--neutral-900);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: var(--font-size-body);
+  color: var(--neutral-600);
+}
+
+/* El foco por programa (cambio de pantalla) no muestra anillo, como en WelcomeView. */
+.title:focus-visible {
+  box-shadow: none;
+}

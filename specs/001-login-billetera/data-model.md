@@ -13,7 +13,7 @@ Cuenta habilitada para la demostración. Se carga de la configuración externa (
 |---|---|---|
 | `email` | string | Obligatorio, formato válido (R7), se almacena normalizado (trim + minúsculas); único en el conjunto |
 | `password` | string | Obligatorio, 8–128 caracteres; NO DEBE registrarse ni mostrarse (FR-012) |
-| `displayName` | string | Obligatorio, 1–80 caracteres; se muestra en la bienvenida |
+| `displayName` | string | Obligatorio, 1–80 caracteres; se muestra en la bienvenida. *Desde 002: solo letras, espacios, `'`, `.` y `-` (mismas reglas que el nombre completo del registro, 002 FR-004)* |
 
 **Invariantes**: el conjunto tiene al menos una cuenta; los correos repetidos invalidan la
 configuración (estado `unavailable`).

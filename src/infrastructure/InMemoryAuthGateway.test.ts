@@ -1,7 +1,10 @@
 import { TEST_ACCOUNT } from '@/test/fixtures';
+import type { Account } from '@/domain/auth';
+import { InMemoryAccounts } from './InMemoryAccounts';
 import { InMemoryAuthGateway } from './InMemoryAuthGateway';
 
-const gateway = (accounts = [TEST_ACCOUNT]) => new InMemoryAuthGateway(accounts, { delayMs: 0 });
+const gateway = (accounts: Account[] = [TEST_ACCOUNT]) =>
+  new InMemoryAuthGateway(new InMemoryAccounts(accounts), { delayMs: 0 });
 
 describe('InMemoryAuthGateway (contracts/auth-gateway.md)', () => {
   afterEach(() => {
@@ -38,7 +41,9 @@ describe('InMemoryAuthGateway (contracts/auth-gateway.md)', () => {
   });
 
   it('C4: configuración ausente → unavailable', async () => {
-    const result = await new InMemoryAuthGateway(null, { delayMs: 0 }).authenticate({
+    const result = await new InMemoryAuthGateway(new InMemoryAccounts(null), {
+      delayMs: 0,
+    }).authenticate({
       email: TEST_ACCOUNT.email,
       password: TEST_ACCOUNT.password,
     });
@@ -71,7 +76,7 @@ describe('InMemoryAuthGateway (contracts/auth-gateway.md)', () => {
   it('FR-008: espera delayMs antes de responder (1000 ms por defecto)', async () => {
     vi.useFakeTimers();
     const onResolve = vi.fn();
-    new InMemoryAuthGateway([TEST_ACCOUNT])
+    new InMemoryAuthGateway(new InMemoryAccounts([TEST_ACCOUNT]))
       .authenticate({ email: TEST_ACCOUNT.email, password: TEST_ACCOUNT.password })
       .then(onResolve);
     await vi.advanceTimersByTimeAsync(999);

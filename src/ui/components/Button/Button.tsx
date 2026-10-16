@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import textLinkStyles from '@/ui/styles/textLink.module.css';
 import styles from './Button.module.css';
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -18,7 +19,14 @@ export function Button({
   children,
   ...rest
 }: ButtonProps) {
-  const classes = [styles.button, styles[variant], className].filter(Boolean).join(' ');
+  const classes = [
+    styles.button,
+    styles[variant],
+    variant === 'link' && textLinkStyles.textLink,
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
   return (
     <button
       {...rest}

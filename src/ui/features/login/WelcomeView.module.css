@@ -6,8 +6,8 @@
 
 .title {
   margin: 0;
-  font-size: 30px;
-  font-weight: 700;
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-bold);
   color: var(--neutral-900);
 }
 
@@ -17,6 +17,6 @@
 
 .subtitle {
   margin: -14px 0 0;
-  font-size: 16px;
+  font-size: var(--font-size-body);
   color: var(--neutral-600);
 }
