@@ -1,11 +1,18 @@
-# KynWallet · Inicio de sesión (demo)
+# KynWallet · Inicio de sesión y registro (demo)
 
-Demostración funcional, solo del lado del cliente, de la pantalla de inicio de sesión de la
-billetera virtual KynWallet. Reproduce el diseño de Figma
-([01 · Login](https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual---Prototipos?node-id=2-2)),
-valida los campos y simula la autenticación contra cuentas ficticias, sin backend ni base de datos.
+Demostración funcional, solo del lado del cliente, de las pantallas de inicio de sesión y de
+registro de la billetera virtual KynWallet. Reproduce los diseños de Figma
+([01 · Login](https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual---Prototipos?node-id=2-2)
+y `04 · Registro`, nodo `31:2`), valida los campos y simula la autenticación y el registro con
+cuentas en memoria, sin backend ni base de datos.
 
-Especificación, plan y tareas: [`specs/001-login-billetera/`](specs/001-login-billetera/).
+| Ruta        | Pantalla                                                         |
+| ----------- | ---------------------------------------------------------------- |
+| `/login`    | Inicio de sesión. La raíz y cualquier otra dirección llevan aquí |
+| `/registro` | Registro de usuarios                                             |
+
+Especificaciones, planes y tareas: [`specs/001-login-billetera/`](specs/001-login-billetera/) y
+[`specs/002-registro-usuarios/`](specs/002-registro-usuarios/).
 
 ## Requisitos
 
@@ -24,12 +31,23 @@ Edita `.env.local` y define al menos una cuenta **ficticia** en `VITE_DEMO_USERS
 VITE_DEMO_USERS=[{"email":"tu.correo@example.com","password":"minimo-8-caracteres","displayName":"Tu Nombre"}]
 ```
 
-- `password`: de 8 a 128 caracteres. `displayName`: de 1 a 80 caracteres. Los correos no se pueden repetir.
+- `password`: de 8 a 128 caracteres. `displayName`: de 1 a 80 caracteres, solo letras, espacios,
+  `'`, `.` y `-` (las mismas reglas que el nombre del registro). Los correos no se pueden repetir.
+  Si una cuenta no cumple las reglas, se ignora toda la configuración.
 - `.env.local` no se versiona: la Constitución del proyecto (regla 5.3) prohíbe credenciales en el
   código fuente o en archivos versionados.
 - ⚠️ Al ser una aplicación solo-cliente, el valor de `VITE_DEMO_USERS` queda incluido en el bundle
   compilado. Usa únicamente cuentas ficticias.
-- Si la variable falta o es inválida, la pantalla muestra "Servicio de acceso no disponible".
+- Si la variable falta o es inválida, el login muestra "Servicio de acceso no disponible" y el
+  registro "Servicio de registro no disponible".
+- Las cuentas creadas en `/registro` viven solo en memoria: sirven para iniciar sesión hasta que
+  se recarga la página. Nada se guarda en el navegador.
+
+## Despliegue
+
+La app usa direcciones reales (`/login`, `/registro`). El servidor debe devolver `index.html` para
+cualquier ruta; `npm run dev` y `npm run preview` ya lo hacen. Sin esa regla de reescritura,
+abrir `/registro` directamente da 404.
 
 ## Scripts
 
@@ -51,13 +69,17 @@ Clean Architecture ligera. Las dependencias apuntan hacia el dominio y ESLint lo
 ```text
 src/
 ├── domain/          # Tipos, reglas de validación y textos. Sin React.
-├── application/     # Caso de uso `authenticate` y puerto `AuthGateway`
-├── infrastructure/  # `InMemoryAuthGateway` (simulación, 1 s) y `loadDemoAccounts`
+├── application/     # Casos de uso `authenticate` y `register`, puertos `AuthGateway` y `RegistrationGateway`
+├── infrastructure/  # `InMemoryAccounts` (cuentas compartidas), gateways en memoria (simulación, 1 s)
+│                    # y `loadDemoAccounts`
 ├── ui/
-│   ├── styles/      # Tokens de Figma (`tokens.css`) y estilos globales
-│   ├── components/  # Button, TextField, PasswordField, Checkbox, SocialButton, Divider, Alert
-│   ├── layout/      # BrandPanel
-│   └── features/login/  # LoginScreen, LoginForm, WelcomeView, reducer y hook
+│   ├── styles/      # Tokens de Figma (color, tipografía, espaciado) y estilos globales
+│   ├── routing/     # Router mínimo sobre la History API: `useRoute`, `navigate`, `Link`
+│   ├── forms/       # Helpers compartidos por los formularios
+│   ├── components/  # Button, TextField, PasswordField, Checkbox, SocialButton, Divider, Alert,
+│   │                # FormHeading, FormFooter
+│   ├── layout/      # AuthLayout (dos paneles) y BrandPanel
+│   └── features/    # login/ y register/: pantalla, formulario, reducer y hook
 ├── App.tsx
 └── main.tsx         # Raíz de composición (inyección de dependencias)
 ```
@@ -73,5 +95,10 @@ requisito que verifica (por ejemplo, `US2-1`, `FR-012`) para mantener la trazabi
   en `src/ui/styles/tokens.css`). Detalle en `specs/001-login-billetera/research.md` (R3).
 - Los iconos de Google, Apple y del control de visibilidad son los marcadores de posición del
   diseño de Figma.
-- Fuera de alcance: recuperar contraseña, registro, acceso con Google/Apple, persistencia de
-  "Recordarme" y bloqueo por intentos fallidos. Al activarlos se muestra un aviso.
+- El panel de marca del registro usa el degradado de su frame (`--brand-gradient-register`),
+  distinto al del login; pendiente de confirmación de diseño.
+- Fuera de alcance: recuperar contraseña, acceso con Google/Apple, texto legal de los términos,
+  persistencia de "Recordarme" y bloqueo por intentos fallidos. Al activarlos se muestra un aviso.
+- **Excepción temporal (Constitución 9.1):** no hay registro estructurado de eventos de seguridad
+  ni métricas (reglas 5.5 y 8.7). Vence el 2027-03-31 o con el primer backend; ver
+  `specs/002-registro-usuarios/plan.md`.

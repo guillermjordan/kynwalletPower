@@ -1,10 +1,22 @@
 import logoMark from '@/ui/assets/logo-mark.svg';
 import styles from './BrandPanel.module.css';
 
-/** Panel de marca del diseño (Figma, nodo 2:3). */
-export function BrandPanel() {
+export type BrandPanelProps = {
+  /** Una línea del titular por elemento. */
+  title: readonly string[];
+  subtitle: string;
+  /** Degradado del frame correspondiente (002 research.md R7). */
+  variant?: 'login' | 'register';
+};
+
+/** Panel de marca del diseño (Figma, nodos 2:3 y 31:3). */
+export function BrandPanel({ title, subtitle, variant = 'login' }: BrandPanelProps) {
   return (
-    <header className={styles.panel}>
+    <header
+      className={[styles.panel, variant === 'register' && styles.register]
+        .filter(Boolean)
+        .join(' ')}
+    >
       <div className={styles.logo}>
         <img src={logoMark} alt="" width={20} height={44} />
         <span className={styles.logoText}>KynWallet</span>
@@ -12,13 +24,13 @@ export function BrandPanel() {
 
       <div className={styles.headline}>
         <p className={styles.title}>
-          Tu dinero,
-          <br />
-          sin fronteras.
+          {title.map((line) => (
+            <span key={line} className={styles.titleLine}>
+              {line}
+            </span>
+          ))}
         </p>
-        <p className={styles.subtitle}>
-          Envía, recibe y paga en segundos. Una billetera pensada para tu día a día.
-        </p>
+        <p className={styles.subtitle}>{subtitle}</p>
       </div>
 
       <div className={styles.card} aria-hidden="true">

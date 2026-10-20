@@ -28,10 +28,15 @@ describe('loadDemoAccounts', () => {
     ['password: 8–128 caracteres (larga)', { ...valid, password: 'x'.repeat(129) }],
     ['displayName: obligatorio', { ...valid, displayName: '' }],
     ['displayName: 1–80 caracteres', { ...valid, displayName: 'x'.repeat(81) }],
+    ['displayName: reglas de nombre completo (002 FR-004)', { ...valid, displayName: 'R2-D2' }],
     ['tipos incorrectos', { ...valid, password: 12345678 }],
     ['no es objeto', 'cuenta'],
   ])('devuelve null si una cuenta incumple "%s"', (_rule, account) => {
     expect(loadDemoAccounts(raw([account]))).toBeNull();
+  });
+
+  it('displayName de 80 caracteres es válido', () => {
+    expect(loadDemoAccounts(raw([{ ...valid, displayName: 'x'.repeat(80) }]))).toHaveLength(1);
   });
 
   it('devuelve null si hay correos duplicados (sin distinguir mayúsculas)', () => {

@@ -8,7 +8,7 @@ export type AuthResult =
   | { kind: 'invalid-credentials' }
   | { kind: 'unavailable' };
 
-export type DemoAccount = {
+export type Account = {
   email: string;
   password: string;
   displayName: string;

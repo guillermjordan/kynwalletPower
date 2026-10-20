@@ -11,7 +11,7 @@
 }
 
 .text {
-  font-size: 13px;
+  font-size: var(--font-size-caption);
   color: var(--neutral-600);
   white-space: nowrap;
 }

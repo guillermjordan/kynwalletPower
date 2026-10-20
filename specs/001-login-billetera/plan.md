@@ -56,6 +56,7 @@ archivos versionados; sin scroll horizontal desde 320px
 | 8.3 Documentación | README con ejecución local (de quickstart.md); contratos documentados | ✅ |
 | 8.4 Accesibilidad AA | Roles y etiquetas según el contrato de UI; `vitest-axe`; contraste ajustado | ⚠️ requiere desviar colores de Figma (ver Complexity Tracking) |
 | 8.6 Sistema de diseño | Tokens de Figma replicados 1:1 más tokens accesibles derivados | ⚠️ desviación pendiente de aprobación |
+| 5.5 / 8.7 Eventos de seguridad y observabilidad | Sin logs estructurados ni métricas (app solo cliente). Evaluado tarde, en `/speckit.analyze` de 002 | ⚠️ excepción temporal 9.1 registrada en `specs/002-registro-usuarios/plan.md` (Complexity Tracking) |
 | 9.2 Trazabilidad | Pruebas nombradas con el ID del escenario o requisito (p. ej., `US2-1`, `FR-010`); tareas que referencian FR/US | ✅ |
 | 9.3/9.4 Revisión y controles | Script `verify` con todos los controles; **el directorio aún no es un repositorio git** | ⚠️ inicializar git antes de integrar |
 

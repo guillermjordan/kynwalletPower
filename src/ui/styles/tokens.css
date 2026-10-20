@@ -21,6 +21,8 @@
 
   /* Valores sin variable en Figma */
   --brand-gradient: linear-gradient(121.19deg, #ff8a65 0%, #ef5226 70.71%);
+  /* Frame 04 · Registro (nodo 31:2). Pendiente de confirmación de diseño (002 research.md R7). */
+  --brand-gradient-register: linear-gradient(70.73deg, #ff8a65 31.7%, #ef5226 83.46%);
   --card-surface: rgba(255, 255, 255, 0.16);
   --card-border: rgba(255, 255, 255, 0.35);
   --card-chip: rgba(255, 217, 128, 0.9);
@@ -34,4 +36,32 @@
   --social-height: 48px;
 
   --focus-ring: 0 0 0 2px var(--neutral-0), 0 0 0 4px var(--neutral-900);
+
+  /* Tipografía Inter, valores comunes a 01 · Login y 04 · Registro (002 research.md R7) */
+  --font-size-display: 44px;
+  --line-height-display: 1.08;
+  --font-size-logo: 26px;
+  --font-size-title: 30px;
+  --font-size-lead: 17px;
+  --line-height-lead: 1.5;
+  --font-size-body: 16px;
+  --font-size-input: 15px;
+  --font-size-label: 14px;
+  --font-size-caption: 13px;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Espaciado */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+  /* Medidas de layout */
+  --form-width: 400px;
+  --brand-panel-width: 620px;
 }

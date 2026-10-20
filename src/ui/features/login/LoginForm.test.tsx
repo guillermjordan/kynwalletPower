@@ -179,7 +179,7 @@ describe('LoginForm · US3 Validar los campos antes de enviar', () => {
 });
 
 describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
-  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple', 'Regístrate'])(
+  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple'])(
     'US5-1: "%s" muestra el aviso y conserva los datos',
     async (name) => {
       const { user, stub, email, password } = setup();
@@ -194,6 +194,13 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
       expect(stub.authenticate).not.toHaveBeenCalled();
     },
   );
+
+  it('002 US3-2: "Regístrate" es un enlace a /registro y ya no muestra el aviso', () => {
+    setup();
+    const link = screen.getByRole('link', { name: 'Regístrate' });
+    expect(link).toHaveAttribute('href', '/registro');
+    expect(screen.queryByRole('button', { name: 'Regístrate' })).not.toBeInTheDocument();
+  });
 
   it('US5-2: "Recordarme" cambia de estado sin escribir en el almacenamiento', async () => {
     const setItem = vi.spyOn(Storage.prototype, 'setItem');
@@ -218,7 +225,7 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
       screen.getByRole('button', { name: 'Iniciar sesión' }),
       screen.getByRole('button', { name: 'Google' }),
       screen.getByRole('button', { name: 'Apple' }),
-      screen.getByRole('button', { name: 'Regístrate' }),
+      screen.getByRole('link', { name: 'Regístrate' }),
     ];
     for (const element of expected) {
       await user.tab();
@@ -260,5 +267,33 @@ describe('LoginForm · seguridad (FR-012)', () => {
 
     setItem.mockRestore();
     consoleSpies.forEach((spy) => spy.mockRestore());
+  });
+});
+
+describe('LoginForm · aviso de registro exitoso (002 FR-014)', () => {
+  const notice = 'Cuenta creada con éxito. Ya puedes iniciar sesión.';
+
+  it('US1-1: muestra el aviso recibido como status', () => {
+    render(
+      <LoginForm
+        authenticate={createAuthStub().authenticate}
+        notice={notice}
+        onNoticeDismiss={() => {}}
+      />,
+    );
+    expect(screen.getByRole('status')).toHaveTextContent(notice);
+  });
+
+  it('US1-4: la primera edición de un campo pide descartar el aviso', async () => {
+    const onNoticeDismiss = vi.fn();
+    render(
+      <LoginForm
+        authenticate={createAuthStub().authenticate}
+        notice={notice}
+        onNoticeDismiss={onNoticeDismiss}
+      />,
+    );
+    await userEvent.type(screen.getByLabelText('Correo electrónico'), 'a');
+    expect(onNoticeDismiss).toHaveBeenCalled();
   });
 });

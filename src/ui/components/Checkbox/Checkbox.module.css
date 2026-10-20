@@ -1,7 +1,13 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
 .wrapper {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .box {
@@ -37,8 +43,19 @@
 }
 
 .label {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-medium);
   color: var(--neutral-700);
   cursor: pointer;
+}
+
+.invalid {
+  border-color: var(--danger-600);
+}
+
+.error {
+  margin: 0;
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-medium);
+  color: var(--danger-600);
 }

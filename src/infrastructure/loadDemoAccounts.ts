@@ -1,26 +1,30 @@
-import type { DemoAccount } from '@/domain/auth';
-import { isValidEmail, isValidPasswordLength, normalizeEmail } from '@/domain/validation';
+import type { Account } from '@/domain/auth';
+import {
+  isValidEmail,
+  isValidFullName,
+  isValidPasswordLength,
+  normalizeEmail,
+} from '@/domain/validation';
 
-const DISPLAY_NAME_MAX_LENGTH = 80;
-
-function toAccount(value: unknown): DemoAccount | null {
+function toAccount(value: unknown): Account | null {
   if (typeof value !== 'object' || value === null) return null;
   const { email, password, displayName } = value as Record<string, unknown>;
   if (typeof email !== 'string' || typeof password !== 'string') return null;
   if (typeof displayName !== 'string') return null;
 
-  const name = displayName.trim();
-  const validName = name.length >= 1 && name.length <= DISPLAY_NAME_MAX_LENGTH;
-  if (!isValidEmail(email) || !isValidPasswordLength(password) || !validName) return null;
+  // El nombre sigue las mismas reglas que el registro (002 FR-004), fuente única en el dominio.
+  if (!isValidEmail(email) || !isValidPasswordLength(password) || !isValidFullName(displayName)) {
+    return null;
+  }
 
-  return { email: normalizeEmail(email), password, displayName: name };
+  return { email: normalizeEmail(email), password, displayName: displayName.trim() };
 }
 
 /**
  * Lee las cuentas de demostración de la configuración externa (VITE_DEMO_USERS).
  * Devuelve null si la configuración falta o es inválida (contracts/auth-gateway.md).
  */
-export function loadDemoAccounts(raw: string | undefined): DemoAccount[] | null {
+export function loadDemoAccounts(raw: string | undefined): Account[] | null {
   if (!raw) return null;
   let parsed: unknown;
   try {
@@ -30,7 +34,7 @@ export function loadDemoAccounts(raw: string | undefined): DemoAccount[] | null 
   }
   if (!Array.isArray(parsed) || parsed.length === 0) return null;
 
-  const accounts: DemoAccount[] = [];
+  const accounts: Account[] = [];
   for (const item of parsed) {
     const account = toAccount(item);
     if (!account) return null;

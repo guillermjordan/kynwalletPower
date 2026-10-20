@@ -1,0 +1,26 @@
+/*
+ * Espaciados del frame 04 · Registro (research.md R7): 16px entre campos y 20px antes del
+ * separador, después del encabezado y antes del pie (16px de gap + 4px de margen).
+ */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.form > :first-child,
+.submit,
+.social {
+  margin-bottom: var(--space-1);
+}
+
+.social {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.termsLink {
+  padding: 0;
+  vertical-align: baseline;
+}

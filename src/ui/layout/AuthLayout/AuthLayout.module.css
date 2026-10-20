@@ -16,7 +16,7 @@
 
 .content {
   width: 100%;
-  max-width: 400px;
+  max-width: var(--form-width);
 }
 
 @media (max-width: 479px) {
@@ -35,6 +35,13 @@
 
 @media (min-width: 1280px) {
   .screen {
-    grid-template-columns: 620px 1fr;
+    grid-template-columns: var(--brand-panel-width) 1fr;
+  }
+}
+
+/* 002 FR-022: en móvil, el registro muestra solo el formulario (sin cabecera de marca). */
+@media (max-width: 959px) {
+  .screen[data-mobile-brand='hidden'] > header {
+    display: none;
   }
 }
